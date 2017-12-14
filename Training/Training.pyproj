@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a035e9fd-a72d-44e3-b9fb-2ce5c31d9a48</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <ProjectTypeGuids>{E2A2EEF0-14BE-4BFE-B65C-5669125F62A7};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
+    <ProjectTypeGuids>{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
     <StartupFile>Train_MNIST.py</StartupFile>
     <SearchPath>
     </SearchPath>
@@ -16,6 +16,7 @@
     <RootNamespace>Training</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,7 +29,13 @@
   <ItemGroup>
     <Compile Include="install_mnist.py" />
     <Compile Include="mnist_utils.py" />
+    <Compile Include="self_check.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Train_MNIST.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

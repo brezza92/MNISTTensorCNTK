@@ -44,12 +44,13 @@ def create_reader(path, is_training, input_dim, label_dim):
 
 
 # Creates and trains a feedforward classification model for MNIST images
-def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_epochs=10):
-    image_height = 28
-    image_width  = 28
+#def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_epochs=10):
+def convnet_mnist(debug_output=True, epoch_size=5000, minibatch_size=64, max_epochs=10):
+    image_height = 28 #28
+    image_width  = 28 #28
     num_channels = 1
     input_dim = image_height * image_width * num_channels
-    num_output_classes = 10
+    num_output_classes = 2 #10
 
     # Input variables denoting the features and label data
     input_var = C.ops.input_variable((num_channels, image_height, image_width), np.float32)
@@ -74,7 +75,7 @@ def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_e
     reader_train = create_reader(os.path.join(data_dir, 'Train-28x28_cntk_text.txt'), True, input_dim, num_output_classes)
 
     # Set learning parameters
-    lr_per_sample    = [0.001]*10 + [0.0005]*10 + [0.0001]
+    lr_per_sample    = [0.001]*2 + [0.0005]*2 + [0.0001]
     lr_schedule      = C.learning_rate_schedule(lr_per_sample, C.learners.UnitType.sample, epoch_size)
     mm_time_constant = [0]*5 + [1024]
     mm_schedule      = C.learners.momentum_as_time_constant_schedule(mm_time_constant, epoch_size)
@@ -82,7 +83,7 @@ def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_e
     # Instantiate the trainer object to drive the model training
     learner = C.learners.momentum_sgd(z.parameters, lr_schedule, mm_schedule)
     progress_printers = [C.logging.ProgressPrinter(tag='Training', num_epochs=max_epochs)]
-    progress_printers.append(TensorBoardProgressWriter(freq=10, log_dir=log_dir, model=z))
+    progress_printers.append(TensorBoardProgressWriter(freq=2, log_dir=log_dir, model=z))
 
     trainer = C.Trainer(z, (ce, pe), learner, progress_printers)
 
@@ -116,8 +117,8 @@ def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_e
     }
 
     # Test data for trained model
-    epoch_size = 10000
-    minibatch_size = 1024
+    epoch_size = 1000 #10000
+    minibatch_size = 100 #1024
 
     # process minibatches and evaluate the model
     metric_numer    = 0
